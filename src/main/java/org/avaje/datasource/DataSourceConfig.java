@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Used to config a DataSource when using the internal Ebean DataSource
- * implementation.
+ * Configuration information for a DataSource.
  */
 public class DataSourceConfig {
 
@@ -441,14 +440,14 @@ public class DataSourceConfig {
    * @param serverName the name of the specific dataSource (optional)
    */
   public void loadSettings(Properties properties, String serverName) {
-    DataSourcePropertiesWrapper dbProps = new DataSourcePropertiesWrapper("datasource", serverName, properties);
+    ConfigPropertiesHelper dbProps = new ConfigPropertiesHelper("datasource", serverName, properties);
     loadSettings(dbProps);
   }
 
   /**
    * Load the settings from the PropertiesWrapper.
    */
-  private void loadSettings(DataSourcePropertiesWrapper properties) {
+  private void loadSettings(ConfigPropertiesHelper properties) {
 
     username = properties.get("username", username);
     password = properties.get("password", password);

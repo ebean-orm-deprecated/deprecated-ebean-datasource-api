@@ -5,19 +5,19 @@ import java.util.Properties;
 /**
  * Helper used to read Properties.
  */
-class DataSourcePropertiesWrapper {
+class ConfigPropertiesHelper {
 
   private final Properties properties;
 
   private final String prefix;
 
-  private final String serverName;
+  private final String poolName;
 
   /**
    * Construct with a prefix, serverName and properties.
    */
-  DataSourcePropertiesWrapper(String prefix, String serverName, Properties properties) {
-    this.serverName = serverName;
+  ConfigPropertiesHelper(String prefix, String poolName, Properties properties) {
+    this.poolName = poolName;
     this.prefix = prefix;
     this.properties = properties;
   }
@@ -39,17 +39,19 @@ class DataSourcePropertiesWrapper {
    * This performs a search using the prefix and server name (if supplied) to search for the property
    * value in order based on:
    * <pre>{@code
+   *
    *   prefix.serverName.key
    *   prefix.key
    *   key
+   *
    * }</pre>
    * </p>
    */
   String get(String key, String defaultValue) {
 
     String value = null;
-    if (serverName != null && prefix != null) {
-      value = read(prefix + "." + serverName + "." + key);
+    if (poolName != null && prefix != null) {
+      value = read(prefix + "." + poolName + "." + key);
     }
     if (value == null && prefix != null) {
       value = read(prefix + "." + key);
