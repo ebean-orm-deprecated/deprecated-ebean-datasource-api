@@ -37,13 +37,4 @@ public interface DataSourcePool extends DataSource {
    */
   PoolStatistics getStatistics(boolean reset);
 
-  /**
-   * Return the Runnable to execute for heartbeat testing.
-   */
-  Runnable getHeartbeatRunnable();
-
-  /**
-   * Return the frequency to run the heart bean test.
-   */
-  int getHeartbeatFreqSecs();
 }
