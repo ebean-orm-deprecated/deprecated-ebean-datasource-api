@@ -1,5 +1,6 @@
-package com.avaje.ebean.config;
+package org.avaje.datasource;
 
+import org.avaje.datasource.DataSourceConfig;
 import org.testng.annotations.Test;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.sql;
+package org.avaje.datasource;
 
 import javax.sql.DataSource;
 

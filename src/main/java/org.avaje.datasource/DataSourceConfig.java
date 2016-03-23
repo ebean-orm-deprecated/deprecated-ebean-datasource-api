@@ -1,4 +1,4 @@
-package com.avaje.ebean.config;
+package org.avaje.datasource;
 
 import java.sql.Connection;
 import java.util.LinkedHashMap;
@@ -55,7 +55,7 @@ public class DataSourceConfig {
 
   private boolean offline;
   
-  protected Map<String, String> customProperties;
+  private Map<String, String> customProperties;
 
   /**
    * Return the connection URL.

@@ -1,7 +1,5 @@
 package org.avaje.datasource;
 
-import com.avaje.ebeaninternal.server.lib.sql.DataSourceAlert;
-
 /**
  * Service factory for creating DataSourceAlert implementation.
  */

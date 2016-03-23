@@ -1,4 +1,4 @@
-package com.avaje.ebeaninternal.server.lib.sql;
+package org.avaje.datasource;
 
 /**
  * Listener for notifications about the DataSource such as when the DataSource

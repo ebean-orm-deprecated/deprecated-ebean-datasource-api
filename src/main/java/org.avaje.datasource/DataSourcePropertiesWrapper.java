@@ -1,7 +1,10 @@
-package com.avaje.ebean.config;
+package org.avaje.datasource;
 
 import java.util.Properties;
 
+/**
+ * Helper used to read Properties.
+ */
 class DataSourcePropertiesWrapper {
 
   private final Properties properties;
@@ -57,48 +60,20 @@ class DataSourcePropertiesWrapper {
     return value == null ? defaultValue : value;
   }
 
-//  /**
-//   * Return a double property value.
-//   */
-//  public double getDouble(String key, double defaultValue) {
-//
-//    String value = get(key, String.valueOf(defaultValue));
-//    return Double.parseDouble(value);
-//  }
-
   /**
    * Return an int property value.
    */
   int getInt(String key, int defaultValue) {
-
     String value = get(key, String.valueOf(defaultValue));
     return Integer.parseInt(value);
   }
-
-//  /**
-//   * Return a long property value.
-//   */
-//  public long getLong(String key, long defaultValue) {
-//
-//    String value = get(key, String.valueOf(defaultValue));
-//    return Long.parseLong(value);
-//  }
 
   /**
    * Return a boolean property value.
    */
   boolean getBoolean(String key, boolean defaultValue) {
-
     String value = get(key, String.valueOf(defaultValue));
     return Boolean.parseBoolean(value);
   }
-
-//  /**
-//   * Return a Enum property value.
-//   */
-//  public <T extends Enum<T>> T getEnum(Class<T> enumType, String key, T defaultValue) {
-//    String level = get(key, null);
-//    return (level == null) ? defaultValue : Enum.valueOf(enumType, level.toUpperCase());
-//  }
 
 }
