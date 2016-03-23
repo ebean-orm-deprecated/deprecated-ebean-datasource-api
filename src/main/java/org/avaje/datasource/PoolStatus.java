@@ -6,11 +6,6 @@ package org.avaje.datasource;
 public interface PoolStatus {
 
   /**
-   * Return the name of the pool.
-   */
-  String getName();
-
-  /**
    * Return the pools minimum size.
    */
   int getMinSize();

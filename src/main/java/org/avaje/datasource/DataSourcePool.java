@@ -8,6 +8,11 @@ import javax.sql.DataSource;
 public interface DataSourcePool extends DataSource {
 
   /**
+   * Return the dataSource name.
+   */
+  String getName();
+
+  /**
    * Return true if the pool defaults to using autocommit.
    */
   boolean isAutoCommit();
