@@ -56,6 +56,10 @@ public class DataSourceConfig {
   
   private Map<String, String> customProperties;
 
+  private DataSourceAlert alert;
+
+  private DataSourcePoolListener listener;
+
   /**
    * Return the connection URL.
    */
@@ -169,6 +173,34 @@ public class DataSourceConfig {
   }
 
   /**
+   * Return the alert implementation to use.
+   */
+  public DataSourceAlert getAlert() {
+    return alert;
+  }
+
+  /**
+   * Set the alert implementation to use.
+   */
+  public void setAlert(DataSourceAlert alert) {
+    this.alert = alert;
+  }
+
+  /**
+   * Return the listener to use.
+   */
+  public DataSourcePoolListener getListener() {
+    return listener;
+  }
+
+  /**
+   * Set the listener to use.
+   */
+  public void setListener(DataSourcePoolListener listener) {
+    this.listener = listener;
+  }
+
+  /**
    * Return a SQL statement used to test the database is accessible.
    * <p>
    * Note that if this is not set then it can get defaulted from the
@@ -190,7 +222,6 @@ public class DataSourceConfig {
     this.heartbeatSql = heartbeatSql;
   }
 
-  
   /**
    * Return the heartbeat frequency in seconds.
    * <p>
