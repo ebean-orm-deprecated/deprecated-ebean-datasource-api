@@ -25,8 +25,8 @@ public interface DataSourcePool extends DataSource {
   /**
    * Return the current status of the connection pool.
    * <p>
-   * This is a little bit cheaper that getStatistics() with just the counts
-   * of free, busy, wait etc and does not included times (total connection time etc).
+   * This is cheaper than getStatistics() in that it just the counts of free, busy,
+   * wait etc and does not included times (total connection time etc).
    * </p>
    * <p>
    * If you pass reset = true then the counters are reset.
