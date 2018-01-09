@@ -25,7 +25,9 @@ public class DataSourceConfig {
   private int isolationLevel = Connection.TRANSACTION_READ_COMMITTED;
 
   private boolean autoCommit;
-  
+
+  private boolean readOnly;
+
   private String heartbeatSql;
   
   private int heartbeatFreqSecs = 30;
@@ -59,6 +61,35 @@ public class DataSourceConfig {
   private DataSourceAlert alert;
 
   private DataSourcePoolListener listener;
+
+  /**
+   * Default the values for driver, url, username and password from another config if
+   * they have not been set.
+   */
+  public void setDefaults(DataSourceConfig other) {
+    if (driver == null) {
+      driver = other.driver;
+    }
+    if (url == null) {
+      url = other.url;
+    }
+    if (username == null) {
+      username = other.username;
+    }
+    if (password == null) {
+      password = other.password;
+    }
+  }
+
+  /**
+   * Return true if there are no values set for any of url, driver, username and password.
+   */
+  public boolean isEmpty() {
+    return url == null
+        && driver == null
+        && username == null
+        && password == null;
+  }
 
   /**
    * Return the connection URL.
@@ -142,6 +173,20 @@ public class DataSourceConfig {
    */
   public void setAutoCommit(boolean autoCommit) {
     this.autoCommit = autoCommit;
+  }
+
+  /**
+   * Return the read only setting.
+   */
+  public boolean isReadOnly() {
+    return readOnly;
+  }
+
+  /**
+   * Set to true to for read only.
+   */
+  public void setReadOnly(boolean readOnly) {
+    this.readOnly = readOnly;
   }
 
   /**
@@ -484,8 +529,8 @@ public class DataSourceConfig {
     password = properties.get("password", password);
     driver = properties.get("driver", properties.get("databaseDriver", driver));
     url = properties.get("url", properties.get("databaseUrl", url));
-
     autoCommit = properties.getBoolean("autoCommit", autoCommit);
+    readOnly = properties.getBoolean("readOnly", readOnly);
     captureStackTrace = properties.getBoolean("captureStackTrace", captureStackTrace);
     maxStackTraceSize = properties.getInt("maxStackTraceSize", maxStackTraceSize);
     leakTimeMinutes = properties.getInt("leakTimeMinutes", leakTimeMinutes);
