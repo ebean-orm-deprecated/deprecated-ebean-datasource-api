@@ -1,5 +1,7 @@
 package org.avaje.datasource;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 /**
@@ -41,5 +43,35 @@ public interface DataSourcePool extends DataSource {
    * </p>
    */
   PoolStatistics getStatistics(boolean reset);
+
+  /**
+   * Returns false when the dataSource is down.
+   */
+  boolean isDataSourceUp();
+
+  /**
+   * Returns the reason, why the dataSource is down.
+   */
+  SQLException getDataSourceDownReason();
+
+  /**
+   * Set a new maximum size. The pool should respect this new maximum
+   * immediately and not require a restart. You may want to increase the
+   * maxConnections if the pool gets large and hits the warning level.
+   */
+  void setMaxSize(int max);
+
+  /**
+   * Set a new maximum size. The pool should respect this new maximum immediately
+   * and not require a restart. You may want to increase the maxConnections if the
+   * pool gets large and hits the warning and or alert levels.
+   */
+  void setWarningSize(int warningSize);
+
+  /**
+    * Return the warning size. When the pool hits this size it can send a
+    * notify message to an administrator.
+    */
+   public int getWarningSize();
 
 }
