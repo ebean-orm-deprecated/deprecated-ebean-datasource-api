@@ -1,2 +1,2 @@
-# avaje-datasource-api
+# ebean-datasource-api
 java.sql.DataSource service API
