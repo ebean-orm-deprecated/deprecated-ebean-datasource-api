@@ -1,4 +1,4 @@
-package org.avaje.datasource;
+package io.ebean.datasource;
 
 /**
  * Service factory for creating DataSourceAlert implementation.

@@ -1,4 +1,4 @@
-package org.avaje.datasource;
+package io.ebean.datasource;
 
 import java.sql.Connection;
 

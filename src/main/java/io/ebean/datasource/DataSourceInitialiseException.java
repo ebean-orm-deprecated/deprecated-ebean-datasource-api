@@ -1,4 +1,4 @@
-package org.avaje.datasource;
+package io.ebean.datasource;
 
 /**
  * Exception that can be thrown when the datasource fails to be created.

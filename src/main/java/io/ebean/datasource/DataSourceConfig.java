@@ -1,4 +1,4 @@
-package org.avaje.datasource;
+package io.ebean.datasource;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ public class DataSourceConfig {
   private boolean readOnly;
 
   private String heartbeatSql;
-  
+
   private int heartbeatFreqSecs = 30;
-  
+
   private int heartbeatTimeoutSeconds = 3;
-  
+
   private boolean captureStackTrace;
 
   private int maxStackTraceSize = 5;
@@ -43,27 +43,27 @@ public class DataSourceConfig {
   private int leakTimeMinutes = 30;
 
   private int maxInactiveTimeSecs = 300;
-  
+
   private int maxAgeMinutes = 0;
-  
+
   private int trimPoolFreqSecs = 59;
 
   private int pstmtCacheSize = 20;
-  
+
   private int cstmtCacheSize = 20;
 
   private int waitTimeoutMillis = 1000;
-  
+
   private String poolListener;
 
   private boolean offline;
 
   private boolean failOnStart = true;
-  
+
   private Map<String, String> customProperties;
-  
+
   private List<String> initSql;
-  
+
 
   private DataSourceAlert alert;
 
@@ -167,7 +167,7 @@ public class DataSourceConfig {
   public void setIsolationLevel(int isolationLevel) {
     this.isolationLevel = isolationLevel;
   }
-  
+
   /**
    * Return autoCommit setting.
    */
@@ -291,7 +291,7 @@ public class DataSourceConfig {
   public void setHeartbeatFreqSecs(int heartbeatFreqSecs) {
     this.heartbeatFreqSecs = heartbeatFreqSecs;
   }
-  
+
   /**
    * Return the heart beat timeout in seconds.
    */
@@ -429,7 +429,7 @@ public class DataSourceConfig {
   public int getMaxAgeMinutes() {
     return maxAgeMinutes;
   }
-  
+
   /**
    * Set the maximum age a connection can be in minutes.
    */
@@ -449,7 +449,7 @@ public class DataSourceConfig {
     this.maxInactiveTimeSecs = maxInactiveTimeSecs;
   }
 
-  
+
   /**
    * Return the minimum time gap between pool trim checks.
    * <p>
@@ -491,7 +491,7 @@ public class DataSourceConfig {
   public boolean isOffline() {
     return offline;
   }
-  
+
   /**
    * Return true (default) if the DataSource should be fail on start.
    * <p>
@@ -509,21 +509,21 @@ public class DataSourceConfig {
   public void setFailOnStart(boolean failOnStart) {
     this.failOnStart = failOnStart;
   }
-  
+
   /**
    * Set to true if the DataSource should be left offline.
    */
   public void setOffline(boolean offline) {
     this.offline = offline;
   }
-  
+
   /**
    * Return a map of custom properties for the jdbc driver connection.
    */
   public Map<String, String> getCustomProperties() {
     return customProperties;
   }
-  
+
   /**
    * Return a list of init queries, that are executed after a connection is opened.
    */
@@ -600,7 +600,7 @@ public class DataSourceConfig {
       this.customProperties = parseCustom(customProperties);
     }
   }
-  
+
   private List<String> parseSql(String sql) {
     List<String> ret = new ArrayList<>();
     if (sql != null) {
