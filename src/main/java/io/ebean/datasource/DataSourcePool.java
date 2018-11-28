@@ -1,8 +1,7 @@
 package io.ebean.datasource;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * DataSource pool API.
@@ -69,9 +68,9 @@ public interface DataSourcePool extends DataSource {
   void setWarningSize(int warningSize);
 
   /**
-    * Return the warning size. When the pool hits this size it can send a
-    * notify message to an administrator.
-    */
-   public int getWarningSize();
+   * Return the warning size. When the pool hits this size it can send a
+   * notify message to an administrator.
+   */
+  public int getWarningSize();
 
 }

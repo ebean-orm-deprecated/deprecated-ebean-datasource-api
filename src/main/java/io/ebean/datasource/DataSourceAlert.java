@@ -1,8 +1,7 @@
 package io.ebean.datasource;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * Listener for notifications about the DataSource such as when the DataSource
