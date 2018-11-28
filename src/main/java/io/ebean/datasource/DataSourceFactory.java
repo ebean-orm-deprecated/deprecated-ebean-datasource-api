@@ -2,8 +2,35 @@ package io.ebean.datasource;
 
 /**
  * Factory that creates DataSourcePool's.
+ *
+ * <pre>{@code
+ *
+ *     DataSourceFactory factory = DataSourceFactory.get();
+ *
+ *     DataSourceConfig config = new DataSourceConfig();
+ *     config.setDriver("org.h2.Driver");
+ *     config.setUrl("jdbc:h2:mem:tests2");
+ *     config.setUsername("sa");
+ *     config.setPassword("");
+ *
+ *     DataSourcePool pool = factory.createPool("test", config);
+ *
+ *     Connection connection = pool.getConnection();
+ *
+ * }</pre>
  */
 public interface DataSourceFactory {
+
+  /**
+   * Return the DataSourceFactory.
+   * <p>
+   * The implementation is obtained via standard service loader mechanism requiring an
+   * implementation to be in the classpath.
+   * </p>
+   */
+  static DataSourceFactory get() {
+    return DSManager.get();
+  }
 
   /**
    * Create the DataSourcePool with the given configuration.
