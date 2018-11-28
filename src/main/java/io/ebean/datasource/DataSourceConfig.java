@@ -12,11 +12,30 @@ import java.util.Properties;
  */
 public class DataSourceConfig {
 
+  private static final String POSTGRES = "postgres";
+
+  private InitDatabase initDatabase;
+
   private String url;
 
   private String username;
 
   private String password;
+
+  /**
+   * The name of the database platform (for use with ownerUsername and InitDatabase).
+   */
+  private String platform;
+
+  /**
+   * The optional database owner username (for running InitDatabase).
+   */
+  private String ownerUsername;
+
+  /**
+   * The optional database owner password (for running InitDatabase).
+   */
+  private String ownerPassword;
 
   private String driver;
 
@@ -73,7 +92,7 @@ public class DataSourceConfig {
    * Default the values for driver, url, username and password from another config if
    * they have not been set.
    */
-  public void setDefaults(DataSourceConfig other) {
+  public DataSourceConfig setDefaults(DataSourceConfig other) {
     if (driver == null) {
       driver = other.driver;
     }
@@ -86,6 +105,7 @@ public class DataSourceConfig {
     if (password == null) {
       password = other.password;
     }
+    return this;
   }
 
   /**
@@ -93,9 +113,9 @@ public class DataSourceConfig {
    */
   public boolean isEmpty() {
     return url == null
-        && driver == null
-        && username == null
-        && password == null;
+      && driver == null
+      && username == null
+      && password == null;
   }
 
   /**
@@ -108,8 +128,9 @@ public class DataSourceConfig {
   /**
    * Set the connection URL.
    */
-  public void setUrl(String url) {
+  public DataSourceConfig setUrl(String url) {
     this.url = url;
+    return this;
   }
 
   /**
@@ -122,8 +143,9 @@ public class DataSourceConfig {
   /**
    * Set the database username.
    */
-  public void setUsername(String username) {
+  public DataSourceConfig setUsername(String username) {
     this.username = username;
+    return this;
   }
 
   /**
@@ -136,8 +158,9 @@ public class DataSourceConfig {
   /**
    * Set the database password.
    */
-  public void setPassword(String password) {
+  public DataSourceConfig setPassword(String password) {
     this.password = password;
+    return this;
   }
 
   /**
@@ -150,8 +173,9 @@ public class DataSourceConfig {
   /**
    * Set the database driver.
    */
-  public void setDriver(String driver) {
+  public DataSourceConfig setDriver(String driver) {
     this.driver = driver;
+    return this;
   }
 
   /**
@@ -164,8 +188,9 @@ public class DataSourceConfig {
   /**
    * Set the transaction isolation level.
    */
-  public void setIsolationLevel(int isolationLevel) {
+  public DataSourceConfig setIsolationLevel(int isolationLevel) {
     this.isolationLevel = isolationLevel;
+    return this;
   }
 
   /**
@@ -178,8 +203,9 @@ public class DataSourceConfig {
   /**
    * Set to true to turn on autoCommit.
    */
-  public void setAutoCommit(boolean autoCommit) {
+  public DataSourceConfig setAutoCommit(boolean autoCommit) {
     this.autoCommit = autoCommit;
+    return this;
   }
 
   /**
@@ -192,8 +218,9 @@ public class DataSourceConfig {
   /**
    * Set to true to for read only.
    */
-  public void setReadOnly(boolean readOnly) {
+  public DataSourceConfig setReadOnly(boolean readOnly) {
     this.readOnly = readOnly;
+    return this;
   }
 
   /**
@@ -206,8 +233,9 @@ public class DataSourceConfig {
   /**
    * Set the minimum number of connections the pool should maintain.
    */
-  public void setMinConnections(int minConnections) {
+  public DataSourceConfig setMinConnections(int minConnections) {
     this.minConnections = minConnections;
+    return this;
   }
 
   /**
@@ -220,8 +248,9 @@ public class DataSourceConfig {
   /**
    * Set the maximum number of connections the pool can reach.
    */
-  public void setMaxConnections(int maxConnections) {
+  public DataSourceConfig setMaxConnections(int maxConnections) {
     this.maxConnections = maxConnections;
+    return this;
   }
 
   /**
@@ -234,8 +263,9 @@ public class DataSourceConfig {
   /**
    * Set the alert implementation to use.
    */
-  public void setAlert(DataSourceAlert alert) {
+  public DataSourceConfig setAlert(DataSourceAlert alert) {
     this.alert = alert;
+    return this;
   }
 
   /**
@@ -248,8 +278,9 @@ public class DataSourceConfig {
   /**
    * Set the listener to use.
    */
-  public void setListener(DataSourcePoolListener listener) {
+  public DataSourceConfig setListener(DataSourcePoolListener listener) {
     this.listener = listener;
+    return this;
   }
 
   /**
@@ -270,8 +301,9 @@ public class DataSourceConfig {
    * DatabasePlatform.
    * </p>
    */
-  public void setHeartbeatSql(String heartbeatSql) {
+  public DataSourceConfig setHeartbeatSql(String heartbeatSql) {
     this.heartbeatSql = heartbeatSql;
+    return this;
   }
 
   /**
@@ -288,8 +320,9 @@ public class DataSourceConfig {
   /**
    * Set the expected heartbeat frequency in seconds.
    */
-  public void setHeartbeatFreqSecs(int heartbeatFreqSecs) {
+  public DataSourceConfig setHeartbeatFreqSecs(int heartbeatFreqSecs) {
     this.heartbeatFreqSecs = heartbeatFreqSecs;
+    return this;
   }
 
   /**
@@ -302,8 +335,9 @@ public class DataSourceConfig {
   /**
    * Set the heart beat timeout in seconds.
    */
-  public void setHeartbeatTimeoutSeconds(int heartbeatTimeoutSeconds) {
+  public DataSourceConfig setHeartbeatTimeoutSeconds(int heartbeatTimeoutSeconds) {
     this.heartbeatTimeoutSeconds = heartbeatTimeoutSeconds;
+    return this;
   }
 
   /**
@@ -330,8 +364,9 @@ public class DataSourceConfig {
    * Obviously this has a performance overhead.
    * </p>
    */
-  public void setCaptureStackTrace(boolean captureStackTrace) {
+  public DataSourceConfig setCaptureStackTrace(boolean captureStackTrace) {
     this.captureStackTrace = captureStackTrace;
+    return this;
   }
 
   /**
@@ -344,8 +379,9 @@ public class DataSourceConfig {
   /**
    * Set the max size for reporting stack traces on busy connections.
    */
-  public void setMaxStackTraceSize(int maxStackTraceSize) {
+  public DataSourceConfig setMaxStackTraceSize(int maxStackTraceSize) {
     this.maxStackTraceSize = maxStackTraceSize;
+    return this;
   }
 
   /**
@@ -360,8 +396,9 @@ public class DataSourceConfig {
    * Set the time in minutes after which a connection could be considered to
    * have leaked.
    */
-  public void setLeakTimeMinutes(int leakTimeMinutes) {
+  public DataSourceConfig setLeakTimeMinutes(int leakTimeMinutes) {
     this.leakTimeMinutes = leakTimeMinutes;
+    return this;
   }
 
   /**
@@ -374,8 +411,9 @@ public class DataSourceConfig {
   /**
    * Set the size of the PreparedStatement cache (per connection).
    */
-  public void setPstmtCacheSize(int pstmtCacheSize) {
+  public DataSourceConfig setPstmtCacheSize(int pstmtCacheSize) {
     this.pstmtCacheSize = pstmtCacheSize;
+    return this;
   }
 
   /**
@@ -388,8 +426,9 @@ public class DataSourceConfig {
   /**
    * Set the size of the CallableStatement cache (per connection).
    */
-  public void setCstmtCacheSize(int cstmtCacheSize) {
+  public DataSourceConfig setCstmtCacheSize(int cstmtCacheSize) {
     this.cstmtCacheSize = cstmtCacheSize;
+    return this;
   }
 
   /**
@@ -404,8 +443,9 @@ public class DataSourceConfig {
    * Set the time in millis to wait for a connection before timing out once the
    * pool has reached its maximum size.
    */
-  public void setWaitTimeoutMillis(int waitTimeoutMillis) {
+  public DataSourceConfig setWaitTimeoutMillis(int waitTimeoutMillis) {
     this.waitTimeoutMillis = waitTimeoutMillis;
+    return this;
   }
 
   /**
@@ -433,8 +473,9 @@ public class DataSourceConfig {
   /**
    * Set the maximum age a connection can be in minutes.
    */
-  public void setMaxAgeMinutes(int maxAgeMinutes) {
+  public DataSourceConfig setMaxAgeMinutes(int maxAgeMinutes) {
     this.maxAgeMinutes = maxAgeMinutes;
+    return this;
   }
 
   /**
@@ -445,8 +486,9 @@ public class DataSourceConfig {
    * towards the minimum connections.
    * </p>
    */
-  public void setMaxInactiveTimeSecs(int maxInactiveTimeSecs) {
+  public DataSourceConfig setMaxInactiveTimeSecs(int maxInactiveTimeSecs) {
     this.maxInactiveTimeSecs = maxInactiveTimeSecs;
+    return this;
   }
 
 
@@ -464,8 +506,9 @@ public class DataSourceConfig {
   /**
    * Set the minimum trim gap between pool trim checks.
    */
-  public void setTrimPoolFreqSecs(int trimPoolFreqSecs) {
+  public DataSourceConfig setTrimPoolFreqSecs(int trimPoolFreqSecs) {
     this.trimPoolFreqSecs = trimPoolFreqSecs;
+    return this;
   }
 
   /**
@@ -478,8 +521,9 @@ public class DataSourceConfig {
   /**
    * Set a pool listener.
    */
-  public void setPoolListener(String poolListener) {
+  public DataSourceConfig setPoolListener(String poolListener) {
     this.poolListener = poolListener;
+    return this;
   }
 
   /**
@@ -506,15 +550,17 @@ public class DataSourceConfig {
   /**
    * Set to false, if DataSource should not fail on start. (e.g. DataSource is not available)
    */
-  public void setFailOnStart(boolean failOnStart) {
+  public DataSourceConfig setFailOnStart(boolean failOnStart) {
     this.failOnStart = failOnStart;
+    return this;
   }
 
   /**
    * Set to true if the DataSource should be left offline.
    */
-  public void setOffline(boolean offline) {
+  public DataSourceConfig setOffline(boolean offline) {
     this.offline = offline;
+    return this;
   }
 
   /**
@@ -534,15 +580,110 @@ public class DataSourceConfig {
   /**
    * Set custom init queries for each query.
    */
-  public void setInitSql(List<String> initSql) {
+  public DataSourceConfig setInitSql(List<String> initSql) {
     this.initSql = initSql;
+    return this;
   }
 
   /**
    * Set custom properties for the jdbc driver connection.
    */
-  public void setCustomProperties(Map<String, String> customProperties) {
+  public DataSourceConfig setCustomProperties(Map<String, String> customProperties) {
     this.customProperties = customProperties;
+    return this;
+  }
+
+  /**
+   * Return the database owner username.
+   */
+  public String getOwnerUsername() {
+    return ownerUsername;
+  }
+
+  /**
+   * Set the database owner username (used to create connection for use with InitDatabase).
+   */
+  public DataSourceConfig setOwnerUsername(String ownerUsername) {
+    this.ownerUsername = ownerUsername;
+    return this;
+  }
+
+  /**
+   * Return the database owner password.
+   */
+  public String getOwnerPassword() {
+    return ownerPassword;
+  }
+
+  /**
+   * Set the database owner password (used to create connection for use with InitDatabase).
+   */
+  public DataSourceConfig setOwnerPassword(String ownerPassword) {
+    this.ownerPassword = ownerPassword;
+    return this;
+  }
+
+  /**
+   * Return the database platform.
+   */
+  public String getPlatform() {
+    return platform;
+  }
+
+  /**
+   * Set the database platform (for use with ownerUsername and InitDatabase.
+   */
+  public DataSourceConfig setPlatform(String platform) {
+    this.platform = platform;
+    if (initDatabase != null) {
+      setInitDatabaseForPlatform(platform);
+    }
+    return this;
+  }
+
+  /**
+   * Return the InitDatabase to use with ownerUsername.
+   */
+  public InitDatabase getInitDatabase() {
+    return initDatabase;
+  }
+
+  /**
+   * Set the InitDatabase to use with ownerUsername.
+   */
+  public DataSourceConfig setInitDatabase(InitDatabase initDatabase) {
+    this.initDatabase = initDatabase;
+    return this;
+  }
+
+  /**
+   * Set InitDatabase based on the database platform.
+   */
+  public DataSourceConfig setInitDatabaseForPlatform(String platform) {
+    if (platform != null) {
+      switch (platform.toLowerCase()) {
+        case POSTGRES:
+          initDatabase = new PostgresInitDatabase();
+          break;
+      }
+    }
+    return this;
+  }
+
+  /**
+   * Return true if InitDatabase should be used (when the pool initialises and a connection can't be obtained).
+   *
+   * @return True to obtain a connection using ownerUsername and run InitDatabase.
+   */
+  public boolean useInitDatabase() {
+    if (ownerUsername != null && ownerPassword != null) {
+      if (initDatabase == null) {
+        // default to postgres
+        initDatabase = new PostgresInitDatabase();
+      }
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -554,9 +695,10 @@ public class DataSourceConfig {
    * @param properties the properties to configure the dataSource
    * @param serverName the name of the specific dataSource (optional)
    */
-  public void loadSettings(Properties properties, String serverName) {
+  public DataSourceConfig loadSettings(Properties properties, String serverName) {
     ConfigPropertiesHelper dbProps = new ConfigPropertiesHelper("datasource", serverName, properties);
     loadSettings(dbProps);
+    return this;
   }
 
   /**
@@ -566,6 +708,13 @@ public class DataSourceConfig {
 
     username = properties.get("username", username);
     password = properties.get("password", password);
+    platform = properties.get("platform", platform);
+    ownerUsername = properties.get("ownerUsername", ownerUsername);
+    ownerPassword = properties.get("ownerPassword", ownerPassword);
+    if (initDatabase == null && platform != null) {
+      setInitDatabaseForPlatform(platform);
+    }
+
     driver = properties.get("driver", properties.get("databaseDriver", driver));
     url = properties.get("url", properties.get("databaseUrl", url));
     autoCommit = properties.getBoolean("autoCommit", autoCommit);
@@ -585,7 +734,7 @@ public class DataSourceConfig {
     waitTimeoutMillis = properties.getInt("waitTimeout", waitTimeoutMillis);
 
     heartbeatSql = properties.get("heartbeatSql", heartbeatSql);
-    heartbeatTimeoutSeconds =  properties.getInt("heartbeatTimeoutSeconds", heartbeatTimeoutSeconds);
+    heartbeatTimeoutSeconds = properties.getInt("heartbeatTimeoutSeconds", heartbeatTimeoutSeconds);
     poolListener = properties.get("poolListener", poolListener);
     offline = properties.getBoolean("offline", offline);
 
@@ -617,7 +766,7 @@ public class DataSourceConfig {
 
   Map<String, String> parseCustom(String customProperties) {
 
-    Map<String,String> propertyMap = new LinkedHashMap<String, String>();
+    Map<String, String> propertyMap = new LinkedHashMap<String, String>();
     String[] pairs = customProperties.split(";");
     for (String pair : pairs) {
       String[] split = pair.split("=");
@@ -633,12 +782,18 @@ public class DataSourceConfig {
    */
   private String getTransactionIsolationLevel(int level) {
     switch (level) {
-      case Connection.TRANSACTION_NONE : return "NONE";
-      case Connection.TRANSACTION_READ_COMMITTED : return "READ_COMMITTED";
-      case Connection.TRANSACTION_READ_UNCOMMITTED : return "READ_UNCOMMITTED";
-      case Connection.TRANSACTION_REPEATABLE_READ : return "REPEATABLE_READ";
-      case Connection.TRANSACTION_SERIALIZABLE : return "SERIALIZABLE";
-      default: throw new RuntimeException("Transaction Isolation level [" + level + "] is not known.");
+      case Connection.TRANSACTION_NONE:
+        return "NONE";
+      case Connection.TRANSACTION_READ_COMMITTED:
+        return "READ_COMMITTED";
+      case Connection.TRANSACTION_READ_UNCOMMITTED:
+        return "READ_UNCOMMITTED";
+      case Connection.TRANSACTION_REPEATABLE_READ:
+        return "REPEATABLE_READ";
+      case Connection.TRANSACTION_SERIALIZABLE:
+        return "SERIALIZABLE";
+      default:
+        throw new RuntimeException("Transaction Isolation level [" + level + "] is not known.");
     }
   }
 
