@@ -22,6 +22,13 @@ package io.ebean.datasource;
 public interface DataSourceFactory {
 
   /**
+   * Create the DataSourcePool given the name and configuration.
+   */
+  static DataSourcePool create(String name, DataSourceConfig config) {
+    return get().createPool(name, config);
+  }
+
+  /**
    * Return the DataSourceFactory.
    * <p>
    * The implementation is obtained via standard service loader mechanism requiring an
