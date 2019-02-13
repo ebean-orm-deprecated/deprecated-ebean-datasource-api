@@ -2,9 +2,12 @@ package io.ebean.datasource;
 
 import org.junit.Test;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 
 public class DataSourceConfigTest {
@@ -40,6 +43,37 @@ public class DataSourceConfigTest {
     config = new DataSourceConfig();
     config.setDriver("foo");
     assertThat(config.isEmpty()).isFalse();
+  }
+
+  @Test
+  public void copy() {
+
+    DataSourceConfig  source = new DataSourceConfig();
+    source.setMinConnections(42);
+    source.setMaxConnections(45);
+    source.setUsername("un");
+    source.setPassword("pw");
+    source.setUrl("url");
+
+    Map<String,String> customSource = new LinkedHashMap<>();
+    customSource.put("a","a");
+    customSource.put("b","b");
+    source.setCustomProperties(customSource);
+
+
+    DataSourceConfig copy = source.copy();
+    assertEquals("un", copy.getUsername());
+    assertEquals("pw", copy.getPassword());
+    assertEquals("url", copy.getUrl());
+    assertEquals(42, copy.getMinConnections());
+    assertEquals(45, copy.getMaxConnections());
+
+    customSource.put("a","modifiedA");
+    customSource.put("c","newC");
+
+    assertEquals("a", copy.getCustomProperties().get("a"));
+    assertEquals("b", copy.getCustomProperties().get("b"));
+    assertNull(copy.getCustomProperties().get("c"));
   }
 
   @Test

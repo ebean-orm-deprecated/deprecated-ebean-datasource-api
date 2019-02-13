@@ -89,6 +89,50 @@ public class DataSourceConfig {
   private DataSourcePoolListener listener;
 
   /**
+   * Return a copy of the DataSourceConfig.
+   */
+  public DataSourceConfig copy() {
+
+    DataSourceConfig copy = new DataSourceConfig();
+    copy.initDatabase = initDatabase;
+    copy.url = url;
+    copy.username = username;
+    copy.password = password;
+    copy.platform = platform;
+    copy.ownerUsername = ownerUsername;
+    copy.ownerPassword = ownerPassword;
+    copy.driver = driver;
+    copy.minConnections = minConnections;
+    copy.maxConnections = maxConnections;
+    copy.isolationLevel = isolationLevel;
+    copy.autoCommit = autoCommit;
+    copy.readOnly = readOnly;
+    copy.heartbeatSql = heartbeatSql;
+    copy.heartbeatFreqSecs = heartbeatFreqSecs;
+    copy.heartbeatTimeoutSeconds = heartbeatTimeoutSeconds;
+    copy.captureStackTrace = captureStackTrace;
+    copy.maxStackTraceSize = maxStackTraceSize;
+    copy.leakTimeMinutes = leakTimeMinutes;
+    copy.maxInactiveTimeSecs = maxInactiveTimeSecs;
+    copy.maxAgeMinutes = maxAgeMinutes;
+    copy.trimPoolFreqSecs = trimPoolFreqSecs;
+    copy.pstmtCacheSize = pstmtCacheSize;
+    copy.cstmtCacheSize = cstmtCacheSize;
+    copy.waitTimeoutMillis = waitTimeoutMillis;
+    copy.poolListener = poolListener;
+    copy.offline = offline;
+    copy.failOnStart = failOnStart;
+    if (customProperties != null) {
+      copy.customProperties = new LinkedHashMap<>(customProperties);
+    }
+    copy.initSql = initSql;
+    copy.alert = alert;
+    copy.listener = listener;
+
+    return copy;
+  }
+
+  /**
    * Default the values for driver, url, username and password from another config if
    * they have not been set.
    */
