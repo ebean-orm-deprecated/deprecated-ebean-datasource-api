@@ -9,16 +9,6 @@ import java.sql.SQLException;
 public interface DataSourcePool extends DataSource {
 
   /**
-   * Bring the DataSource online ensuring min connections and start heart beat checking.
-   */
-  void online() throws SQLException;
-
-  /**
-   * Take the DataSource offline closing all connections and stopping heart beat checking.
-   */
-  void offline();
-
-  /**
    * Return the dataSource name.
    */
   String getName();
@@ -27,6 +17,16 @@ public interface DataSourcePool extends DataSource {
    * Return true if the pool defaults to using autocommit.
    */
   boolean isAutoCommit();
+
+  /**
+   * Bring the DataSource online ensuring min connections and start heart beat checking.
+   */
+  void online() throws SQLException;
+
+  /**
+   * Take the DataSource offline closing all connections and stopping heart beat checking.
+   */
+  void offline();
 
   /**
    * Shutdown the pool with the option to deregister the driver.
@@ -81,6 +81,6 @@ public interface DataSourcePool extends DataSource {
    * Return the warning size. When the pool hits this size it can send a
    * notify message to an administrator.
    */
-  public int getWarningSize();
+  int getWarningSize();
 
 }
