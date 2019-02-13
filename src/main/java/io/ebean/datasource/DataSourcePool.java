@@ -9,6 +9,16 @@ import java.sql.SQLException;
 public interface DataSourcePool extends DataSource {
 
   /**
+   * Bring the DataSource online ensuring min connections and start heart beat checking.
+   */
+  void online() throws SQLException;
+
+  /**
+   * Take the DataSource offline closing all connections and stopping heart beat checking.
+   */
+  void offline();
+
+  /**
    * Return the dataSource name.
    */
   String getName();
