@@ -19,6 +19,13 @@ public interface DataSourcePool extends DataSource {
   boolean isAutoCommit();
 
   /**
+   * Return true if the DataSource is online.
+   * <p>
+   * Effectively the same as (synonym for) {@link #isDataSourceUp()}.
+   */
+  boolean isOnline();
+
+  /**
    * Bring the DataSource online ensuring min connections and start heart beat checking.
    */
   void online() throws SQLException;
@@ -27,6 +34,15 @@ public interface DataSourcePool extends DataSource {
    * Take the DataSource offline closing all connections and stopping heart beat checking.
    */
   void offline();
+
+  /**
+   * Shutdown the pool.
+   * <p>
+   * This is functionally the same as {@link #offline()} but generally we expect to only
+   * shutdown the pool once where as we can expect to making many calls to offline() and
+   * online().
+   */
+  void shutdown();
 
   /**
    * Shutdown the pool with the option to deregister the driver.
@@ -55,6 +71,8 @@ public interface DataSourcePool extends DataSource {
 
   /**
    * Returns false when the dataSource is down.
+   * <p>
+   * Effectively the same as (synonym for) {@link #isOnline()}.
    */
   boolean isDataSourceUp();
 
