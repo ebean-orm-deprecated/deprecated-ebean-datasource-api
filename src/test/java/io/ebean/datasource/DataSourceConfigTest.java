@@ -2,8 +2,10 @@ package io.ebean.datasource;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -54,6 +56,7 @@ public class DataSourceConfigTest {
     source.setUsername("un");
     source.setPassword("pw");
     source.setUrl("url");
+    source.setSchema("sch");
 
     Map<String,String> customSource = new LinkedHashMap<>();
     customSource.put("a","a");
@@ -65,6 +68,7 @@ public class DataSourceConfigTest {
     assertEquals("un", copy.getUsername());
     assertEquals("pw", copy.getPassword());
     assertEquals("url", copy.getUrl());
+    assertEquals("sch", copy.getSchema());
     assertEquals(42, copy.getMinConnections());
     assertEquals(45, copy.getMaxConnections());
 
@@ -88,6 +92,8 @@ public class DataSourceConfigTest {
     assertThat(readOnly.getUrl()).isEqualTo(config.getUrl());
     assertThat(readOnly.getUsername()).isEqualTo(config.getUsername());
     assertThat(readOnly.getPassword()).isEqualTo(config.getPassword());
+    assertThat(readOnly.getSchema()).isEqualTo(config.getSchema());
+
   }
 
   @Test
@@ -114,5 +120,19 @@ public class DataSourceConfigTest {
     config.setUsername("foo");
     config.setPassword("bar");
     return config;
+  }
+
+  @Test
+  public void loadSettings() throws IOException {
+
+    DataSourceConfig config = new DataSourceConfig();
+
+    Properties props = new Properties();
+    props.load(getClass().getResourceAsStream("/example.properties"));
+    config.loadSettings(props, "db");
+
+    assertThat(config.getUsername()).isEqualTo("myusername");
+    assertThat(config.getPassword()).isEqualTo("mypassword");
+    assertThat(config.getSchema()).isEqualTo("myschema");
   }
 }

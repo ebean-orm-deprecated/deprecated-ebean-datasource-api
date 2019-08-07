@@ -22,6 +22,8 @@ public class DataSourceConfig {
 
   private String password;
 
+  private String schema;
+
   /**
    * The name of the database platform (for use with ownerUsername and InitDatabase).
    */
@@ -98,6 +100,7 @@ public class DataSourceConfig {
     copy.url = url;
     copy.username = username;
     copy.password = password;
+    copy.schema = schema;
     copy.platform = platform;
     copy.ownerUsername = ownerUsername;
     copy.ownerPassword = ownerPassword;
@@ -148,6 +151,9 @@ public class DataSourceConfig {
     }
     if (password == null) {
       password = other.password;
+    }
+    if (schema == null) {
+      schema = other.schema;
     }
     return this;
   }
@@ -204,6 +210,21 @@ public class DataSourceConfig {
    */
   public DataSourceConfig setPassword(String password) {
     this.password = password;
+    return this;
+  }
+
+  /**
+   * Return the database username.
+   */
+  public String getSchema() {
+    return schema;
+  }
+
+  /**
+   * Set the default database schema to use.
+   */
+  public DataSourceConfig setSchema(String schema) {
+    this.schema = schema;
     return this;
   }
 
@@ -752,6 +773,7 @@ public class DataSourceConfig {
 
     username = properties.get("username", username);
     password = properties.get("password", password);
+    schema = properties.get("schema", schema);
     platform = properties.get("platform", platform);
     ownerUsername = properties.get("ownerUsername", ownerUsername);
     ownerPassword = properties.get("ownerPassword", ownerPassword);
