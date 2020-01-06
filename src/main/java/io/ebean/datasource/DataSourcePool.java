@@ -62,14 +62,6 @@ public interface DataSourcePool extends DataSource {
   PoolStatus getStatus(boolean reset);
 
   /**
-   * Return the aggregated execution statistics collected on all the connections in the pool.
-   * <p>
-   * If reset is set to true the counters are reset once the statistics have been collected.
-   * </p>
-   */
-  PoolStatistics getStatistics(boolean reset);
-
-  /**
    * Returns false when the dataSource is down.
    * <p>
    * Effectively the same as (synonym for) {@link #isOnline()}.
