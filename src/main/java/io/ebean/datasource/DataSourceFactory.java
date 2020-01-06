@@ -5,15 +5,13 @@ package io.ebean.datasource;
  *
  * <pre>{@code
  *
- *     DataSourceFactory factory = DataSourceFactory.get();
- *
  *     DataSourceConfig config = new DataSourceConfig();
  *     config.setDriver("org.h2.Driver");
  *     config.setUrl("jdbc:h2:mem:tests2");
  *     config.setUsername("sa");
  *     config.setPassword("");
  *
- *     DataSourcePool pool = factory.createPool("test", config);
+ *     DataSourcePool pool = DataSourceFactory.create("test", config);
  *
  *     Connection connection = pool.getConnection();
  *

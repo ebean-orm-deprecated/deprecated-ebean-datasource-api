@@ -9,15 +9,8 @@ import java.sql.Connection;
  * <p>
  * In the configuration use the poolListener key to configure which listener to
  * use.
- * </p>
  * <p>
  * Example: datasource.ora10.poolListener=my.very.fancy.PoolListener
- * </p>
- * <p>
- * <p>
- * Notice: This listener only works if you are using the default Avaje
- * {@link DataSourcePool}.
- * </p>
  */
 public interface DataSourcePoolListener {
 

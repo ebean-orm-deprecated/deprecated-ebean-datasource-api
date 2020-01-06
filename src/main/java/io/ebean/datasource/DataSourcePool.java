@@ -54,10 +54,8 @@ public interface DataSourcePool extends DataSource {
    * <p>
    * This is cheaper than getStatistics() in that it just the counts of free, busy,
    * wait etc and does not included times (total connection time etc).
-   * </p>
    * <p>
    * If you pass reset = true then the counters are reset.
-   * </p>
    */
   PoolStatus getStatus(boolean reset);
 
