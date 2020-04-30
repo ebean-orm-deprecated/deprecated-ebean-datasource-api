@@ -16,25 +16,6 @@ import static org.junit.Assert.assertTrue;
 public class DataSourceConfigTest {
 
   @Test
-  public void createReadOnlyConfig_when_readOnlyUrlSet() {
-    final DataSourceConfig config = create().setReadOnlyUrl("myReadOnlyUrl");
-    final DataSourceConfig readOnlyConfig = config.createReadOnlyConfig();
-
-    assertTrue(readOnlyConfig.isAutoCommit());
-    assertTrue(readOnlyConfig.isReadOnly());
-    assertThat(readOnlyConfig.getUrl()).isEqualTo("myReadOnlyUrl");
-    assertThat(readOnlyConfig.getDriver()).isEqualTo(config.getDriver());
-    assertThat(readOnlyConfig.getUsername()).isEqualTo(config.getUsername());
-    assertThat(readOnlyConfig.getPassword()).isEqualTo(config.getPassword());
-    assertThat(readOnlyConfig.getSchema()).isEqualTo(config.getSchema());
-  }
-
-  @Test
-  public void createReadOnlyConfig_when_readOnlyUrlNotSet() {
-    assertNull(create().createReadOnlyConfig());
-  }
-
-  @Test
   public void addProperty() {
 
     DataSourceConfig config = new DataSourceConfig();
@@ -134,6 +115,7 @@ public class DataSourceConfigTest {
     assertThat(readOnly.getUsername()).isEqualTo(config.getUsername());
     assertThat(readOnly.getPassword()).isEqualTo(config.getPassword());
     assertThat(readOnly.getSchema()).isEqualTo(config.getSchema());
+    assertThat(readOnly.getCustomProperties()).containsKeys("useSSL");
   }
 
   @Test
@@ -159,6 +141,7 @@ public class DataSourceConfigTest {
     config.setUrl("jdbc:postgresql://127.0.0.1:5432/unit");
     config.setUsername("foo");
     config.setPassword("bar");
+    config.addProperty("useSSL", false);
     return config;
   }
 

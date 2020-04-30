@@ -158,26 +158,10 @@ public class DataSourceConfig {
     if (schema == null) {
       schema = other.schema;
     }
-    return this;
-  }
-
-  /**
-   * Return a DataSourceConfig that can be used to create a matching read-only DataSource.
-   * This will return null if the <em>readOnlyUrl</em> has not been set.
-   * <p>
-   * The returned configuration will share the same username, password, driver and schema
-   * but will additionally set autoCommit and readOnly to true.
-   */
-  public DataSourceConfig createReadOnlyConfig() {
-    if (readOnlyUrl == null) {
-      return null;
+    if (customProperties == null && other.customProperties != null) {
+      customProperties = new LinkedHashMap<>(other.customProperties);
     }
-    DataSourceConfig roConfig = new DataSourceConfig();
-    roConfig.setUrl(readOnlyUrl);
-    roConfig.setAutoCommit(true);
-    roConfig.setReadOnly(true);
-    roConfig.setDefaults(this);
-    return roConfig;
+    return this;
   }
 
   /**
