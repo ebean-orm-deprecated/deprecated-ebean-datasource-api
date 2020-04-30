@@ -10,9 +10,29 @@ import java.util.Properties;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class DataSourceConfigTest {
+
+  @Test
+  public void createReadOnlyConfig_when_readOnlyUrlSet() {
+    final DataSourceConfig config = create().setReadOnlyUrl("myReadOnlyUrl");
+    final DataSourceConfig readOnlyConfig = config.createReadOnlyConfig();
+
+    assertTrue(readOnlyConfig.isAutoCommit());
+    assertTrue(readOnlyConfig.isReadOnly());
+    assertThat(readOnlyConfig.getUrl()).isEqualTo("myReadOnlyUrl");
+    assertThat(readOnlyConfig.getDriver()).isEqualTo(config.getDriver());
+    assertThat(readOnlyConfig.getUsername()).isEqualTo(config.getUsername());
+    assertThat(readOnlyConfig.getPassword()).isEqualTo(config.getPassword());
+    assertThat(readOnlyConfig.getSchema()).isEqualTo(config.getSchema());
+  }
+
+  @Test
+  public void createReadOnlyConfig_when_readOnlyUrlNotSet() {
+    assertNull(create().createReadOnlyConfig());
+  }
 
   @Test
   public void addProperty() {
@@ -75,6 +95,7 @@ public class DataSourceConfigTest {
     source.setUsername("un");
     source.setPassword("pw");
     source.setUrl("url");
+    source.setReadOnlyUrl("readOnlyUrl");
     source.setSchema("sch");
 
     Map<String,String> customSource = new LinkedHashMap<>();
@@ -87,6 +108,7 @@ public class DataSourceConfigTest {
     assertEquals("un", copy.getUsername());
     assertEquals("pw", copy.getPassword());
     assertEquals("url", copy.getUrl());
+    assertEquals("readOnlyUrl", copy.getReadOnlyUrl());
     assertEquals("sch", copy.getSchema());
     assertEquals(42, copy.getMinConnections());
     assertEquals(45, copy.getMaxConnections());
@@ -112,7 +134,6 @@ public class DataSourceConfigTest {
     assertThat(readOnly.getUsername()).isEqualTo(config.getUsername());
     assertThat(readOnly.getPassword()).isEqualTo(config.getPassword());
     assertThat(readOnly.getSchema()).isEqualTo(config.getSchema());
-
   }
 
   @Test
@@ -148,8 +169,10 @@ public class DataSourceConfigTest {
 
     Properties props = new Properties();
     props.load(getClass().getResourceAsStream("/example.properties"));
-    config.loadSettings(props, "db");
+    config.loadSettings(props, "foo");
 
+    assertThat(config.getReadOnlyUrl()).isEqualTo("myReadOnlyUrl");
+    assertThat(config.getUrl()).isEqualTo("myUrl");
     assertThat(config.getUsername()).isEqualTo("myusername");
     assertThat(config.getPassword()).isEqualTo("mypassword");
     assertThat(config.getSchema()).isEqualTo("myschema");

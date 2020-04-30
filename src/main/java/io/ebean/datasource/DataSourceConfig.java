@@ -16,6 +16,8 @@ public class DataSourceConfig {
 
   private InitDatabase initDatabase;
 
+  private String readOnlyUrl;
+
   private String url;
 
   private String username;
@@ -98,6 +100,7 @@ public class DataSourceConfig {
     DataSourceConfig copy = new DataSourceConfig();
     copy.initDatabase = initDatabase;
     copy.url = url;
+    copy.readOnlyUrl = readOnlyUrl;
     copy.username = username;
     copy.password = password;
     copy.schema = schema;
@@ -159,6 +162,25 @@ public class DataSourceConfig {
   }
 
   /**
+   * Return a DataSourceConfig that can be used to create a matching read-only DataSource.
+   * This will return null if the <em>readOnlyUrl</em> has not been set.
+   * <p>
+   * The returned configuration will share the same username, password, driver and schema
+   * but will additionally set autoCommit and readOnly to true.
+   */
+  public DataSourceConfig createReadOnlyConfig() {
+    if (readOnlyUrl == null) {
+      return null;
+    }
+    DataSourceConfig roConfig = new DataSourceConfig();
+    roConfig.setUrl(readOnlyUrl);
+    roConfig.setAutoCommit(true);
+    roConfig.setReadOnly(true);
+    roConfig.setDefaults(this);
+    return roConfig;
+  }
+
+  /**
    * Return true if there are no values set for any of url, driver, username and password.
    */
   public boolean isEmpty() {
@@ -166,6 +188,21 @@ public class DataSourceConfig {
       && driver == null
       && username == null
       && password == null;
+  }
+
+  /**
+   * Return the read-only URL to use for creating a matching read only DataSource..
+   */
+  public String getReadOnlyUrl() {
+    return readOnlyUrl;
+  }
+
+  /**
+   * Set the connection URL to use for a matching read-only connection pool.
+   */
+  public DataSourceConfig setReadOnlyUrl(String readOnlyUrl) {
+    this.readOnlyUrl = readOnlyUrl;
+    return this;
   }
 
   /**
@@ -822,6 +859,7 @@ public class DataSourceConfig {
     }
 
     driver = properties.get("driver", properties.get("databaseDriver", driver));
+    readOnlyUrl = properties.get("readOnlyUrl", readOnlyUrl);
     url = properties.get("url", properties.get("databaseUrl", url));
     autoCommit = properties.getBoolean("autoCommit", autoCommit);
     readOnly = properties.getBoolean("readOnly", readOnly);
