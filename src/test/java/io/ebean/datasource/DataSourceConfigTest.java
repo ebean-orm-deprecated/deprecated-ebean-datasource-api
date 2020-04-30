@@ -15,6 +15,25 @@ import static org.junit.Assert.assertNull;
 public class DataSourceConfigTest {
 
   @Test
+  public void addProperty() {
+
+    DataSourceConfig config = new DataSourceConfig();
+    assertNull(config.getCustomProperties());
+
+    config.addProperty("useSSL", false);
+    final Map<String, String> extra = config.getCustomProperties();
+    assertThat(extra).hasSize(1);
+    assertThat(extra.get("useSSL")).isEqualTo("false");
+
+    config.addProperty("foo", 42);
+    assertThat(extra.get("foo")).isEqualTo("42");
+
+    config.addProperty("bar", "silly");
+    assertThat(extra.get("bar")).isEqualTo("silly");
+    assertThat(extra).hasSize(3);
+  }
+
+  @Test
   public void parseCustom() {
 
     DataSourceConfig config = new DataSourceConfig();

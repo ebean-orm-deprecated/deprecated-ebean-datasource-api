@@ -659,6 +659,46 @@ public class DataSourceConfig {
   }
 
   /**
+   * Add an additional driver property.
+   * <pre>{@code
+   *
+   *   config.addProperty("useSSL", false);
+   *
+   * }</pre>
+   */
+  public DataSourceConfig addProperty(String key, String value) {
+    if (customProperties == null) {
+      customProperties = new LinkedHashMap<>();
+    }
+    customProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Add an additional driver property.
+   * <pre>{@code
+   *
+   *   config.addProperty("useSSL", false);
+   *
+   * }</pre>
+   */
+  public DataSourceConfig addProperty(String key, boolean value) {
+    return addProperty(key, Boolean.toString(value));
+  }
+
+  /**
+   * Add an additional driver property.
+   * <pre>{@code
+   *
+   *   config.addProperty("useSSL", false);
+   *
+   * }</pre>
+   */
+  public DataSourceConfig addProperty(String key, int value) {
+    return addProperty(key, Integer.toString(value));
+  }
+
+  /**
    * Return the database owner username.
    */
   public String getOwnerUsername() {
