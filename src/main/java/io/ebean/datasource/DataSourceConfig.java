@@ -69,7 +69,7 @@ public class DataSourceConfig {
 
   private int trimPoolFreqSecs = 59;
 
-  private int pstmtCacheSize = 20;
+  private int pstmtCacheSize = 50;
 
   private int cstmtCacheSize = 20;
 
